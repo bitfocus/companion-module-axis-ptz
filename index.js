@@ -1,7 +1,7 @@
 var instance_skel = require('../../instance_skel');
 var request = require("request");
 var tcp = require("../../tcp");
-var presets        = require('./src/presets');
+var presets        = require('./presets');
 var debug;
 var log;
 var instance_speed = 1;
