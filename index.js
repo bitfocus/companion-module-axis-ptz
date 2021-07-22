@@ -206,6 +206,7 @@ class instance extends instance_skel {
 			stop: { label: 'PTZ Stop' },
 			zoomI: { label: 'Zoom In' },
 			zoomO: { label: 'Zoom Out' },
+			zoomstop: { label: 'Zoom Stop' },
 			preset: {
 				label: 'Goto preset',
 				options: [
@@ -395,6 +396,11 @@ class instance extends instance_skel {
 				cmd = 'continuouszoommove'
 				param = '-' + opt.speed
 				self.ptzMove(-1, cmd, 0)
+				break
+			case 'zoomstop':
+				cmd = 'continuouszoommove'
+				param = '-' + opt.speed
+				self.ptzMove(0, cmd, 0)
 				break
 
 			case 'preset':
