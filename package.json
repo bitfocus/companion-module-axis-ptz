@@ -14,5 +14,13 @@
 	"license": "MIT",
 	"dependencies": {
 		"request": "^2.85.0"
+	},
+	"homepage": "https://github.com/bitfocus/companion-module-axis-ptz#readme",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-axis-ptz/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-axis-ptz.git"
 	}
 }
