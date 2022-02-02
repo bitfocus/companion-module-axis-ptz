@@ -26,7 +26,7 @@ class instance extends instance_skel {
 	actions(system) {
 		var self = this
 
-		self.system.emit('instance_actions', self.id, {
+		self.setActions({
 			left: {
 				label: 'Pan Left',
 				options: [
