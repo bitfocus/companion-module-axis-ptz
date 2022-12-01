@@ -14,6 +14,16 @@ Set IP address, port, and password. Password is necessary.
 PTZ
 Set Preset
 Recall Preset
+AutoFocus on/off
+Focus control
 
 ### Presets
-for the supported command
+for the supported commands
+
+### Feedbacks
+Reach PTZ-limits
+Reach focus-limits
+Autofocus on/off
+
+### Variables:
+Info about camerasettings, limits and status
