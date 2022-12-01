@@ -1,8 +1,13 @@
 var instance_skel = require('../../instance_skel')
 var request = require('request')
 var tcp = require('../../tcp')
+var icons = require('./icons')
 var presets = require('./presets')
+var variables = require('./variables')
+var feedbacks = require('./feedbacks')
+var icons = require('./icons')
 var debug
+var switchonofftosend
 var log
 var instance_speed = 1
 
@@ -10,6 +15,8 @@ var instance_speed = 1
  * Companion instance for Axis PTZ cameras.
  * @author Frans Bosman
  */
+
+
 
 class instance extends instance_skel {
 	constructor(system, id, config) {
@@ -20,7 +27,20 @@ class instance extends instance_skel {
 		self.actions()
 		self.BASEURI = ''
 		self.init_presets()
+		self.init_feedbacks()
 		self.getCameraInformation()
+		 /**
+         * @param name Instance variable name
+         * @returns Value of instance variable or undefined
+         * @description Retrieves instance variable from any vMix instances
+         */
+		  this.get = (variable) => {
+            let data;
+            this.instance.parseVariables(variable, (value) => {
+                data = value;
+            });
+            return data;
+        };
 	}
 
 	actions(system) {
@@ -31,20 +51,18 @@ class instance extends instance_skel {
 				label: 'Pan Left',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
 				default: '1',
@@ -53,20 +71,18 @@ class instance extends instance_skel {
 				label: 'Pan Right',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
 				default: '1',
@@ -75,20 +91,18 @@ class instance extends instance_skel {
 				label: 'Tilt up',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
 				default: '1',
@@ -97,115 +111,140 @@ class instance extends instance_skel {
 				label: 'Tilt down',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
-						default: '1',
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
+				default: '1',
 			},
 			upleft: {
 				label: 'Pan Up/Left',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
-						default: '1',
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
+				default: '1',
 			},
 			upright: {
 				label: 'Pan Up/Right',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
-						default: '1',
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
+				default: '1',
 			},
 			downleft: {
 				label: 'Pan Down/Left',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
-						default: '1',
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
+				default: '1',
 			},
 			downright: {
 				label: 'Pan Down/Right',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
-						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
-							{ id: '-1', label: 'Default speed' },
-						],
-						default: '1',
+						type: 'number',
+						label: 'Speed',
+						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
+				default: '1',
 			},
 			stop: { label: 'PTZ Stop' },
-			zoomI: { label: 'Zoom In' },
-			zoomO: { label: 'Zoom Out' },
+			zoomI: { label: 'Zoom In' ,
+			options: [
+				{
+					type: 'number',
+					label: 'Speed',
+					id: 'speed',
+					type: 'number',
+					label: 'Speed',
+					id: 'speed',
+					min: -100,
+					 max: 100,
+					  default: 50,
+					  step: 1,
+					  required: true,
+					  range: false
+				},
+			],
+			default: '1',},
+
+			zoomO: { label: 'Zoom Out' ,
+			options: [
+				{
+					type: 'number',
+					label: 'Speed',
+					id: 'speed',
+					type: 'number',
+					label: 'Speed',
+					id: 'speed',
+					min: -100,
+					 max: 100,
+					  default: 50,
+					  step: 1,
+					  required: true,
+					  range: false
+				},
+			],
+			default: '1',},
 			zoomstop: { label: 'Zoom Stop' },
 			preset: {
 				label: 'Goto preset',
@@ -231,41 +270,90 @@ class instance extends instance_skel {
 					},
 				],
 			},
+			Reload: {
+				label: 'Reload Camera Info',
+				
+			},
 			setDefaultSpeed: {
 				label: 'Set default speed',
 				options: [
 					{
-						type: 'dropdown',
+						type: 'number',
 						label: 'Speed',
 						id: 'speed',
+						min: 1,
+ 						max: 100,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
+					},
+				],
+			},
+			setAutoFocus: {
+				label: 'Set Auto Focus',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Autofocus',
+						id: 'switchonoff',
 						choices: [
-							{ id: '1', label: '1 slow' },
-							{ id: '2', label: '2' },
-							{ id: '3', label: '3' },
-							{ id: '4', label: '4' },
-							{ id: '5', label: '5' },
-							{ id: '6', label: '6' },
-							{ id: '7', label: '7' },
-							{ id: '8', label: '8 fast' },
+							{ id: 'on', label: 'on' },
+							{ id: 'off', label: 'off' },
+							
 						],
-						default: '1',
+						default: 'on',
+					},
+				],
+			},
+			Focus: {
+				label: 'Adjust Focus',
+				options: [
+					{
+						type: 'number',
+						label: 'Steps',
+						id: 'steps',
+						tooltip: '1 ... 9999 Moves focus n steps to the specified absolute position. A high value means focus far, a low value means focus near. ',
+						min: 1,
+ 						max: 9999,
+  						default: 50,
+  						step: 1,
+  						required: true,
+  						range: false
+					},
+				],
+			},
+			ContinousFocusMove: {
+				label: 'Continous Focus Move',
+				options: [
+					{
+						type: 'number',
+						label: 'Steps',
+						id: 'steps',
+						tooltip: '-100 ... 100 Continuous focus motion. Positive values mean focus far and negative values mean focus near. 0 means stop. ',
+						min: -100,
+ 						max: 100,
+  						default: 0,
+  						step: 1,
+  						required: true,
+  						range: false
 					},
 				],
 			},
 		})
 	}
-	ptzConfig(direction, action, speed = 1) {
+	ptzConfig(direction, action) {
 		var self = this
-		self.log('debug', direction + '-' + actio + '-' + speed)
+		//self.log('debug', direction + '-' + actio + '-' + speed)
 
-		if (speed == -1) {
-			speed = self.instance_speed
-		}
+		//if (speed == -1) {
+		//	speed = self.instance_speed
+		//}
 
-		if (isNaN(speed)) {
-			self.log('warn', 'INVALID PTZ SPEED')
-			return 0
-		}
+		//if (isNaN(speed)) {
+		//	self.log('warn', 'INVALID PTZ SPEED')
+		//	return 0
+		//}
 
 		//if ((action !== 'start') && (action !== 'stop')) {
 		//	self.log('warn', 'INVALID PTZ COMMAND!');
@@ -279,7 +367,7 @@ class instance extends instance_skel {
 		//	uri += '&code=' + direction + '&arg1=' + speed +'&arg2=' + speed + '&arg3=0';
 		//};
 
-		self.log('debug', uri)
+		//self.log('debug', uri)
 
 		request(uri, function (error, response, body) {
 			if (error) {
@@ -287,27 +375,60 @@ class instance extends instance_skel {
 				// Start init to reconnect to cam because probably network lost
 				self.init()
 			}
+			self.getCameraInformation()
+			self.checkFeedbacks()
 		}).auth(self.config.user, self.config.password, false)
 	}
 
-	ptzMove(direction, action, speed = 1) {
+	ptzMove(direction, action) {
 		var self = this
-		//self.log('debug', direction+'-'+actio+'-'+speed);
+		//self.log('debug', direction+'-'+action);
 
-		if (speed == -1) {
-			speed = self.instance_speed
-		}
-
-		if (isNaN(speed)) {
-			self.log('warn', 'INVALID PTZ SPEED')
-			return 0
-		}
-
-		//if ((action !== 'start') && (action !== 'stop')) {
-		//	self.log('warn', 'INVALID PTZ COMMAND!');
-		//	return 0;
+		//if (speed == '-1,-1') {
+			//speed = self.instance_speed
 		//}
+
+		//if (isNaN(speed)) {
+		//	self.log('warn', 'INVALID PTZ SPEED')
+		//	return 0
+		//}
+
+		
 		var uri = self.BASEURI + '/axis-cgi/com/ptz.cgi?' + action + '=' + direction + '&camera=1'
+
+		//if (direction == 'GotoPreset') {
+		//	uri += '&code=' + direction + '&arg1=0&arg2=' + speed + '&arg3=0';
+		//} else {
+		//	uri += '&code=' + direction + '&arg1=' + speed +'&arg2=' + speed + '&arg3=0';
+		//};
+		
+		//self.log('debug', 'uri: '+uri)
+
+		request(uri, function (error, response, body) {
+			if (error) {
+				self.log('warn', 'Send Error: ' + error)
+				// Start init to reconnect to cam because probably network lost
+				self.init()
+			}
+			self.getCameraInformation()
+			
+		}).auth(self.config.user, self.config.password, false)
+	}
+	ptzCommand(option, action, bol= 1) {
+		var self = this
+		self.log('debug', 'Ptzcommand: '+ option+'-'+action+' '+bol);
+
+	
+
+		
+		if (bol == '0') {
+			switchonofftosend = 'off'
+		}
+		if (option == '1') {
+			switchonofftosend = 'on'
+		}
+		
+		var uri = self.BASEURI + '/axis-cgi/com/ptz.cgi?' + action + '=' + switchonofftosend + '&camera=1'
 
 		//if (direction == 'GotoPreset') {
 		//	uri += '&code=' + direction + '&arg1=0&arg2=' + speed + '&arg3=0';
@@ -323,14 +444,16 @@ class instance extends instance_skel {
 				// Start init to reconnect to cam because probably network lost
 				self.init()
 			}
+			self.getCameraInformation()
+			self.checkFeedbacks()
 		}).auth(self.config.user, self.config.password, false)
 	}
-
 	action(action) {
 		var self = this
 		var cmd
 		var param
 		var opt = action.options
+		//self.log('debug', 'action='+action.action+opt.speed)
 
 		switch (action.action) {
 			case 'left':
@@ -416,10 +539,43 @@ class instance extends instance_skel {
 				self.ptzMove(param, cmd, opt.preset)
 
 				break
+			case 'setAutoFocus':
+				cmd = 'autofocus'
+
+
+				param = opt.switchonoff
+				self.ptzMove(param, cmd, opt.switchonoff)
+
+				break
+			case 'Focus':
+				cmd = 'focus'
+				//self.log('debug',' case focus'+action+'-'+action.options.steps)
+
+
+				param = action.options.steps
+				self.ptzMove(param, cmd, action.options.steps)
+
+				break
+			case 'ContinousFocusMove':
+				cmd = 'continuousfocusmove'
+				//self.log('debug',' case focus'+action+'-'+action.options.steps)
+
+
+				param = action.options.steps
+				self.ptzMove(param, cmd, action.options.steps)
+
+				break
 
 			case 'setDefaultSpeed':
 				// Only speed of this instance, not send to camera
 				self.instance_speed = opt.speed
+				break
+
+			case 'reload':
+				// Only speed of this instance, not send to camera
+				self.getCameraInformation();
+				
+				self.checkFeedbacks()
 				break
 		}
 	}
@@ -471,7 +627,12 @@ class instance extends instance_skel {
 
 	init() {
 		var self = this
+		self.data = {
+			autofocus: 'on',
+			
 
+			
+		}
 		debug = self.debug
 		log = self.log
 		self.instance_speed = 1
@@ -504,10 +665,12 @@ class instance extends instance_skel {
 				request(self.BASEURI + '/axis-cgi/com/ptz.cgi?move=stop', function (error, response, body) {
 					if (error || response.statusCode !== 204) {
 						self.status(self.STATUS_ERROR, 'Username/password')
-						self.log('warn', 'response.statusCode: ' + response.statusCode)
+						// self.log('warn', 'response.statusCode: ' + response.statusCode)
 					} else {
 						self.status(self.STATUS_OK, 'Connected')
 					}
+					self.init_variables()
+					self.init_feedbacks()
 				}).auth(self.config.user, self.config.password, false)
 			})
 		}
@@ -523,50 +686,200 @@ class instance extends instance_skel {
 		}
 
 		self.init()
+		
 	}
+}
+instance.prototype.init_variables = function () {
+	this.setVariableDefinitions(variables.setVariables(this))
+}
+instance.prototype.getVariablesValue = function () {
+	this.setVariableDefinitions(variables.getVariableValue(this))
+}
+
+instance.prototype.init_feedbacks = function () {
+	this.setFeedbackDefinitions(feedbacks.getFeedbacks(this))
 }
 instance.prototype.init_presets = function () {
 	this.setPresetDefinitions(presets.setPresets(this))
 }
+
+//instance.prototype.getVariable = function (name){
+//	this.getVariable(name, (val) => (selectedValue = val))
+//	return selectedValue
+//		//return selectedValue
+//}
+
+
 instance.prototype.getCameraInformation = function () {
 	var self = this
 
 	if (self.config.host) {
 		self.BASEURI = 'http://' + self.config.host + ':' + self.config.port
-		uri = '/axis-cgi/param.cgi?action=list&group=Properties.PTZ.PTZ'
-		//console.log('debug + get info: '+ self.BASEURI + uri);
+		uri = '/axis-cgi/param.cgi?action=list'
+		//console.log('debug', ' Axis get info: '+ self.BASEURI + uri);
 		request(self.BASEURI + uri, function (error, response, body) {
-			//console.log('warn'," axis camera error: " + error);
-			if (error) {
+			//console.log('warn'," axis camera error: " + error)
+			if (!(error === null)) {
 				self.status(self.STATUS_ERROR, 'Username/password')
-				self.log('warn', 'response.statusCode: ' + response.statusCode)
+				self.log('warn', 'response ' + response)
 			} else {
 				self.status(self.STATUS_OK, 'Connected')
+				//str = JSON.parse(response);
+				//console.log('debug', ' Axis connected:'+body)
+				let chunks = body.split('\n');
+				//console.log('chunks: '+chunks);
 
-				var str_raw = String(body.data)
-				var str = {}
-				if ((body.data = 'Properties.PTZ.PTZ=yes')) {
-					//console.log('info'," axis camera body: " + body);
-					this.ptzenabled = true
-				} else {
-					this.ptzenabled = false
-					console.log('warn', ' axis camera body: no ptz')
-				}
-
-				str_raw = str_raw.split('\r\n') // Split Data in order to remove data before and after command
-
-				for (var i in str_raw) {
-					str = str_raw[i].trim() // remove new line, carage return and so on.
-					str = str.split(':') // Split Commands and data
-
-					debug('HTTP Recived from PTZ: ' + str_raw[i]) // Debug Recived data
-					if (self.config.debug == true) {
-						self.log('info', 'Recived CMD: ' + String(str_raw[i]))
-					}
-					// Store Data
-					//self.storeData(str);
-				}
+			
+				const attarr = new Set([]);
+				for (let i = 0; i < chunks.length-1; i += 1) {
+  					//camattr[chunks[i].split('=')[0]] = chunks[i].split('=')[1].trim()
+					
+					  attarr.add
+					  ( 
+							{label: 'Axis Camera '+chunks[i].split('=')[0],
+							name: chunks[i].split('=')[0],
+							value: chunks[i].split('=')[1].trim(),
+					  }
+					  )
+					  self.setVariable(chunks[i].split('=')[0],chunks[i].split('=')[1].trim())
+					  
+  					
+  					}
+				//console.log (attarr)
+	
+				
 			}
+		}).auth(self.config.user, self.config.password, false)
+	}
+	if (self.config.host) {
+		self.BASEURI = 'http://' + self.config.host + ':' + self.config.port
+		uri = '/axis-cgi/com/ptz.cgi?query=position&camera=1'
+		//console.log('debug', ' Axis get info: '+ self.BASEURI + uri);
+		request(self.BASEURI + uri, function (error, response, body) {
+			//console.log('warn'," axis camera error: " + error)
+			if (!(error === null)) {
+				self.status(self.STATUS_ERROR, 'Username/password')
+				self.log('warn', 'response ' + response)
+			} else {
+				self.status(self.STATUS_OK, 'Connected')
+				//str = JSON.parse(response);
+			//	console.log('debug', ' Axis connected:'+body)
+				let chunks = body.split('\n');
+			//	console.log('chunks: '+chunks);
+
+			
+				const attarr = new Set([]);
+				for (let i = 0; i < chunks.length-1; i += 1) {
+  					//camattr[chunks[i].split('=')[0]] = chunks[i].split('=')[1].trim()
+					
+					  attarr.add
+					  ( 
+							{label: 'Axis Camera '+chunks[i].split('=')[0],
+							name: chunks[i].split('=')[0],
+							value: chunks[i].split('=')[1].trim(),
+					  }
+					  )
+					  self.setVariable(chunks[i].split('=')[0],chunks[i].split('=')[1].trim())
+					  if (chunks[i].split('=')[0] == 'autofocus'){
+						self.data.autofocus = chunks[i].split('=')[1].trim()
+						//self.log('debug','autofocus set: '+self.data.autofocus)
+					  }
+  					
+  					}
+				//console.log (attarr)
+				self.checkFeedbacks()
+				
+
+				
+				
+				
+				
+				
+				
+				
+			}
+		}).auth(self.config.user, self.config.password, false)
+		self.BASEURI = 'http://' + self.config.host + ':' + self.config.port
+		uri = '/axis-cgi/com/ptz.cgi?query=limits&camera=1'
+		//console.log('debug', ' Axis get info: '+ self.BASEURI + uri);
+		request(self.BASEURI + uri, function (error, response, body) {
+			//console.log('warn'," axis camera error: " + error)
+			if (!(error === null)) {
+				self.status(self.STATUS_ERROR, 'Username/password')
+				self.log('warn', 'response ' + response)
+			} else {
+				self.status(self.STATUS_OK, 'Connected')
+				//str = JSON.parse(response);
+				//console.log('debug', ' Axis connected:'+body)
+				let chunks = body.split('\n');
+				//console.log('chunks: '+chunks);
+
+			
+				const attarr = new Set([]);
+				for (let i = 0; i < chunks.length-1; i += 1) {
+  					//camattr[chunks[i].split('=')[0]] = chunks[i].split('=')[1].trim()
+					
+					  attarr.add
+					  ( 
+							{label: 'Axis Camera '+chunks[i].split('=')[0],
+							name: chunks[i].split('=')[0],
+							value: chunks[i].split('=')[1].trim(),
+					  }
+					  )
+					  self.setVariable(chunks[i].split('=')[0],chunks[i].split('=')[1].trim())
+  					
+  					}
+				//console.log (attarr)
+				self.checkFeedbacks()
+				
+				
+				
+				
+				
+				
+				
+			}
+		}).auth(self.config.user, self.config.password, false)
+		self.BASEURI = 'http://' + self.config.host + ':' + self.config.port
+		uri = '/axis-cgi/com/ptz.cgi?query=speed&camera=1'
+		//console.log('debug', ' Axis speed info: '+ self.BASEURI + uri);
+		request(self.BASEURI + uri, function (error, response, body) {
+			//console.log('warn'," axis camera error: " + error)
+			if (!(error === null)) {
+				self.status(self.STATUS_ERROR, 'Username/password')
+				self.log('warn', 'response ' + response)
+			} else {
+				self.status(self.STATUS_OK, 'Connected')
+				//str = JSON.parse(response);
+				//console.log('debug', ' Axis connected:'+body)
+				let chunks = body.split('\n');
+			//	console.log('chunks: '+chunks);
+
+			
+				const attarr = new Set([]);
+				for (let i = 0; i < chunks.length-1; i += 1) {
+  					//camattr[chunks[i].split('=')[0]] = chunks[i].split('=')[1].trim()
+					
+					  attarr.add
+					  ( 
+							{label: 'Axis Camera '+chunks[i].split('=')[0],
+							name: chunks[i].split('=')[0],
+							value: chunks[i].split('=')[1].trim(),
+					  }
+					  )
+					  self.setVariable(chunks[i].split('=')[0],chunks[i].split('=')[1].trim())
+  					
+  					}
+				//console.log (attarr)
+				
+				
+				
+				
+				
+				
+				
+			}
+			
 		}).auth(self.config.user, self.config.password, false)
 	}
 }

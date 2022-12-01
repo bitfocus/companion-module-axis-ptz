@@ -7,23 +7,9 @@ module.exports = {
 		var presets = []
 		var SERIES = {}
 
-		// Set the model and series selected, if in auto, dettect what model is connected via TCP
-		// if (self.config.model === 'Auto') {
-		//     self.data.model = self.data.modelTCP;
-		// } else { self.data.model = self.config.model;}
-
-		//if (self.data.model !== 'NaN') {
-		//    self.data.series = MODELS.find(MODELS => MODELS.id == self.data.model).series;
-		// }
-
-		// Find the specific commands for a given series
-		//if (self.data.series === 'Auto' || self.data.series === 'Other' || SERIES_SPECS.find(SERIES_SPECS => SERIES_SPECS.id == self.data.series) == undefined) {
-		//    SERIES = SERIES_SPECS.find(SERIES_SPECS => SERIES_SPECS.id == 'Other');
-		//} else {
-		//    SERIES = SERIES_SPECS.find(SERIES_SPECS => SERIES_SPECS.id == self.data.series);
-		//}
+		
 		var s = {}
-		// console.log(SERIES);
+		
 
 		// ##########################
 		// #### Pan/Tilt Presets ####
@@ -38,7 +24,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_UP,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -46,7 +32,7 @@ module.exports = {
 					{
 						action: 'up',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -54,6 +40,16 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MaxTiltLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
 				],
 			})
 
@@ -65,7 +61,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_DOWN,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -73,7 +69,7 @@ module.exports = {
 					{
 						action: 'down',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -81,6 +77,16 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MinTiltLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
 				],
 			})
 
@@ -92,7 +98,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_LEFT,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -100,7 +106,7 @@ module.exports = {
 					{
 						action: 'left',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -108,6 +114,16 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MinPanLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
 				],
 			})
 
@@ -119,7 +135,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_RIGHT,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -127,7 +143,7 @@ module.exports = {
 					{
 						action: 'right',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -135,6 +151,16 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MaxPanLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
 				],
 			})
 
@@ -146,7 +172,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_UP_RIGHT,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -154,7 +180,7 @@ module.exports = {
 					{
 						action: 'upright',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -162,6 +188,24 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MaxTiltLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MaxPanLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
+
 				],
 			})
 
@@ -173,7 +217,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_UP_LEFT,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -181,7 +225,7 @@ module.exports = {
 					{
 						action: 'upleft',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -189,6 +233,24 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MaxTiltLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MinPanLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
+
 				],
 			})
 
@@ -200,7 +262,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_DOWN_LEFT,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -208,7 +270,7 @@ module.exports = {
 					{
 						action: 'downleft',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -216,6 +278,24 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MinTiltLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MinPanLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
+
 				],
 			})
 
@@ -227,7 +307,7 @@ module.exports = {
 					text: '',
 					png64: self.ICON_DOWN_RIGHT,
 					pngalignment: 'center:center',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -235,7 +315,7 @@ module.exports = {
 					{
 						action: 'downright',
 						options: {
-							speed: 1,
+							speed: 25,
 						},
 					},
 				],
@@ -243,6 +323,24 @@ module.exports = {
 					{
 						action: 'stop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MinTiltLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MaxPanLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
+
 				],
 			})
 
@@ -252,7 +350,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'HOME',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -264,107 +362,7 @@ module.exports = {
 			})
 		}
 
-		s.ptspeed = false
-		if (s.ptSpeed == true) {
-			presets.push({
-				category: 'Pan/Tilt',
-				label: 'Speed Up',
-				bank: {
-					style: 'text',
-					text: 'SPEED\\nUP\\n$(Panasonic-PTZ:ptSpeedVar)',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'ptSpeedU',
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Pan/Tilt',
-				label: 'Speed Down',
-				bank: {
-					style: 'text',
-					text: 'SPEED\\nDOWN\\n$(Panasonic-PTZ:ptSpeedVar)',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'ptSpeedD',
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Pan/Tilt',
-				label: 'Speed Set High',
-				bank: {
-					style: 'text',
-					text: 'SET\\nSPEED\\nHIGH',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'ptSpeedS',
-						options: {
-							speed: 40,
-						},
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Pan/Tilt',
-				label: 'Speed Set Mid',
-				bank: {
-					style: 'text',
-					text: 'SET\\nSPEED\\nMID',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'ptSpeedS',
-						options: {
-							speed: 25,
-						},
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Pan/Tilt',
-				label: 'Speed Set Low',
-				bank: {
-					style: 'text',
-					text: 'SET\\nSPEED\\nLOW',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'ptSpeedS',
-						options: {
-							speed: 10,
-						},
-					},
-				],
-			})
-		}
-
-		// ######################
-		// #### Lens Presets ####
-		// ######################
-
+		
 		s.zoom = true
 		if (s.zoom == true) {
 			presets.push({
@@ -373,7 +371,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'ZOOM\\nIN',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -387,8 +385,25 @@ module.exports = {
 				],
 				release_actions: [
 					{
-						action: 'stop',
+						action: 'zoomstop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MaxZoomLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MinZoomLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
 				],
 			})
 
@@ -398,7 +413,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'ZOOM\\nOUT',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -412,259 +427,35 @@ module.exports = {
 				],
 				release_actions: [
 					{
-						action: 'stop',
+						action: 'zoomstop',
 					},
+				],
+				feedbacks: [
+					{
+						type: 'MaxZoomLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MinZoomLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
 				],
 			})
 		}
 
-		s.zspeed = false
-		if (s.zSpeed == true) {
-			presets.push({
-				category: 'Lens',
-				label: 'Zoom Speed Up',
-				bank: {
-					style: 'text',
-					text: 'ZOOM\\nSPEED\\nUP\\n$(Panasonic-PTZ:zSpeedVar)',
-					size: '7',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'zSpeedU',
-					},
-				],
-			})
+		
 
-			presets.push({
-				category: 'Lens',
-				label: 'Zoom Speed Down',
-				bank: {
-					style: 'text',
-					text: 'ZOOM\\nSPEED\\nDOWN\\n$(Panasonic-PTZ:zSpeedVar)',
-					size: '7',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'zSpeedD',
-					},
-				],
-			})
 
-			presets.push({
-				category: 'Lens',
-				label: 'Zoom Speed High',
-				bank: {
-					style: 'text',
-					text: 'ZOOM\\nSPEED\\nHIGH',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'zSpeedS',
-						options: {
-							speed: 40,
-						},
-					},
-				],
-			})
+		
 
-			presets.push({
-				category: 'Lens',
-				label: 'Zoom Speed Mid',
-				bank: {
-					style: 'text',
-					text: 'ZOOM\\nSPEED\\nMID',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'zSpeedS',
-						options: {
-							speed: 25,
-						},
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Lens',
-				label: 'Zoom Speed Low',
-				bank: {
-					style: 'text',
-					text: 'ZOOM\\nSPEED\\nLOW',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'zSpeedS',
-						options: {
-							speed: 10,
-						},
-					},
-				],
-			})
-		}
-
-		s.focus = false
-		if (s.focus == true) {
-			presets.push({
-				category: 'Lens',
-				label: 'Focus Near',
-				bank: {
-					style: 'text',
-					text: 'FOCUS\\nNEAR',
-					size: '18',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'focusN',
-						options: {
-							speed: 10,
-						},
-					},
-				],
-				release_actions: [
-					{
-						action: 'focusS',
-						options: {
-							speed: 10,
-						},
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Lens',
-				label: 'Focus Far',
-				bank: {
-					style: 'text',
-					text: 'FOCUS\\nFAR',
-					size: '18',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'focusF',
-					},
-				],
-				release_actions: [
-					{
-						action: 'focusS',
-					},
-				],
-			})
-		}
-
-		s.fspeed = false
-		if (s.fSpeed == true) {
-			presets.push({
-				category: 'Lens',
-				label: 'Focus Speed Up',
-				bank: {
-					style: 'text',
-					text: 'FOCUS\\nSPEED\\nUP\\n$(Panasonic-PTZ:fSpeedVar)',
-					size: '7',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'fSpeedU',
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Lens',
-				label: 'focusM Speed Down',
-				bank: {
-					style: 'text',
-					text: 'FOCUS\\nSPEED\\nDOWN\\n$(Panasonic-PTZ:fSpeedVar)',
-					size: '7',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'fSpeedD',
-					},
-				],
-			})
-			presets.push({
-				category: 'Lens',
-				label: 'Focus Speed High',
-				bank: {
-					style: 'text',
-					text: 'FOCUS\\nSPEED\\nHIGH',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'fSpeedS',
-						options: {
-							speed: 40,
-						},
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Lens',
-				label: 'Focus Speed Mid',
-				bank: {
-					style: 'text',
-					text: 'FOCUS\\nSPEED\\nMID',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'fSpeedS',
-						options: {
-							speed: 25,
-						},
-					},
-				],
-			})
-
-			presets.push({
-				category: 'Lens',
-				label: 'Focus Speed Low',
-				bank: {
-					style: 'text',
-					text: 'FOCUS\\nSPEED\\nLOW',
-					size: '14',
-					color: '16777215',
-					bgcolor: self.rgb(0, 0, 0),
-				},
-				actions: [
-					{
-						action: 'fSpeedS',
-						options: {
-							speed: 10,
-						},
-					},
-				],
-			})
-		}
-
-		s.OAF = false
+		s.OAF = true
 		if (s.OAF == true) {
 			presets.push({
 				category: 'Lens',
@@ -672,23 +463,23 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'MANUAL\\nFOCUS',
-					size: '14',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
 				actions: [
 					{
-						action: 'focusM',
+						action: 'setAutoFocus',
 						options: {
-							bol: 1,
+							switchonoff: 'off',
 						},
 					},
 				],
 				feedbacks: [
 					{
-						type: 'autoFocus',
+						type: 'autofocus',
 						options: {
-							option: '0',
+							switchonoff: '0',
 						},
 					},
 				],
@@ -700,55 +491,110 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'AUTO\\nFOCUS',
-					size: '14',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
 				actions: [
 					{
-						action: 'focusM',
+						action: 'setAutoFocus',
 						options: {
-							bol: 0,
+							switchonoff: 'on',
 						},
 					},
 				],
 				feedbacks: [
 					{
-						type: 'autoFocus',
+						type: 'autofocus',
 						options: {
 							option: '1',
 						},
 					},
 				],
 			})
-
 			presets.push({
 				category: 'Lens',
-				label: 'One Touch Focus',
+				label: 'Focus Adjust',
 				bank: {
 					style: 'text',
-					text: 'OTAF\\nFOCUS',
-					size: '14',
+					text: 'AJUST\\nFOCUS',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
 				actions: [
 					{
-						action: 'focusOTAF',
+						action: 'Focus',
 						options: {
-							bol: 0,
+							steps: 50,
 						},
 					},
 				],
 				feedbacks: [
 					{
-						type: 'autoFocus',
+						type: 'MaxFocusLimit',
 						options: {
-							option: '1',
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MinFocusLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
+				],
+				
+			})
+			presets.push({
+				category: 'Lens',
+				label: 'Continous Focus Move',
+				bank: {
+					style: 'text',
+					text: 'CNT Focus\\nMOVE',
+					size: 'auto',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'ContinousFocusMove',
+						options: {
+							steps: 0,
 						},
 					},
 				],
+				release_actions: [
+					{
+						action: 'ContinousFocusMove',
+						options: {
+							steps: 0,
+						},
+					},
+				],
+				feedbacks: [
+					{
+						type: 'MaxFocusLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+					{
+						type: 'MinFocusLimit',
+						options: {
+							fg: self.rgb(255, 255, 255),
+							bg: self.rgb(255, 0, 0),
+						}
+					},
+
+				],
+				
 			})
+			
 		}
 
 		// ##########################
@@ -763,7 +609,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'IRIS\\nUP',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -780,7 +626,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'IRIS\\nDOWN',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -797,7 +643,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'MANUAL\\nIRIS',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -825,7 +671,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'AUTO\\nIRIS',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -856,7 +702,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'GAIN\\nUP',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -873,7 +719,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'GAIN\\nDOWN',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -893,7 +739,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Shut\\nUP',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -910,7 +756,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Shut\\nDOWN',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -930,7 +776,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Pedestal\\nUP',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -947,7 +793,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Pedestal\\nDOWN',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -971,7 +817,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Power\\nOFF',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -996,7 +842,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Power\\nON',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1024,7 +870,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Tally\\nOFF',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1049,7 +895,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'Tally\\nON',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1077,7 +923,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'INS\\nDesk',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1105,7 +951,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'INS\\nHang',
-					size: '18',
+					size: 'auto',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1136,7 +982,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'SD Card\\nRecording\\nStart',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1156,7 +1002,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'SD Card\\nRecording\\nStop',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1183,7 +1029,7 @@ module.exports = {
 					bank: {
 						style: 'text',
 						text: 'SAVE\\nPSET\\n' + parseInt(save),
-						size: '14',
+						size: '13',
 						color: '16777215',
 						bgcolor: self.rgb(0, 0, 0),
 					},
@@ -1207,7 +1053,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'PRESET\\nMODE\\nSPEED',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1227,7 +1073,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'PRESET\\nMODE\\nTIME',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1250,7 +1096,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'RECALL\\nSPEED\\nHIGH',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1270,7 +1116,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'RECALL\\nSPEED\\nMID',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1290,7 +1136,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'RECALL\\nSPEED\\nLOW',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1313,7 +1159,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'RECALL\\nTIME\\n5 Sec',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1333,7 +1179,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'RECALL\\nTIME\\n10 Sec',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1353,7 +1199,7 @@ module.exports = {
 				bank: {
 					style: 'text',
 					text: 'RECALL\\nTIME\\n30 Sec',
-					size: '14',
+					size: '13',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
 				},
@@ -1377,7 +1223,7 @@ module.exports = {
 					bank: {
 						style: 'text',
 						text: 'preset ' + parseInt(recall),
-						size: '14',
+						size: '13',
 						color: '16777215',
 						bgcolor: self.rgb(0, 0, 0),
 					},
