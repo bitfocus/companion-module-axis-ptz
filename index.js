@@ -1,11 +1,25 @@
 var instance_skel = require('../../instance_skel')
 var request = require('request')
 var tcp = require('../../tcp')
-var icons = require('./icons')
+
 var presets = require('./presets')
 var variables = require('./variables')
 var feedbacks = require('./feedbacks')
-var icons = require('./icons')
+const speeddefinition = {
+	type: 'number',
+	label: 'Speed',
+	id: 'speed',
+	type: 'number',
+	label: 'Speed',
+	id: 'speed',
+	min: 1,
+	 max: 100,
+	  default: 50,
+	  step: 1,
+	  required: true,
+	  range: false
+}
+
 var debug
 var switchonofftosend
 var log
@@ -29,6 +43,7 @@ class instance extends instance_skel {
 		self.init_presets()
 		self.init_feedbacks()
 		self.getCameraInformation()
+		
 		 /**
          * @param name Instance variable name
          * @returns Value of instance variable or undefined
@@ -50,160 +65,56 @@ class instance extends instance_skel {
 			left: {
 				label: 'Pan Left',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
 			right: {
 				label: 'Pan Right',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
 			up: {
 				label: 'Tilt up',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
 			down: {
 				label: 'Tilt down',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
 			upleft: {
 				label: 'Pan Up/Left',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
 			upright: {
 				label: 'Pan Up/Right',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
 			downleft: {
 				label: 'Pan Down/Left',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
 			downright: {
 				label: 'Pan Down/Right',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 				default: '1',
 			},
@@ -277,17 +188,7 @@ class instance extends instance_skel {
 			setDefaultSpeed: {
 				label: 'Set default speed',
 				options: [
-					{
-						type: 'number',
-						label: 'Speed',
-						id: 'speed',
-						min: 1,
- 						max: 100,
-  						default: 50,
-  						step: 1,
-  						required: true,
-  						range: false
-					},
+					speeddefinition,
 				],
 			},
 			setAutoFocus: {
