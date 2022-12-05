@@ -122,9 +122,6 @@ class instance extends instance_skel {
 					type: 'number',
 					label: 'Speed',
 					id: 'speed',
-					type: 'number',
-					label: 'Speed',
-					id: 'speed',
 					min: -100,
 					 max: 100,
 					  default: 50,
@@ -138,9 +135,6 @@ class instance extends instance_skel {
 			zoomO: { label: 'Zoom Out' ,
 			options: [
 				{
-					type: 'number',
-					label: 'Speed',
-					id: 'speed',
 					type: 'number',
 					label: 'Speed',
 					id: 'speed',
