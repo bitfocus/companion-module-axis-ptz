@@ -1,26 +1,24 @@
 {
 	"name": "axis-ptz",
 	"version": "2.0.0",
-	"api_version": "1.0.0",
-	"keywords": [
-		"Camera"
-	],
-	"manufacturer": "axis",
-	"product": "PTZ Camera",
-	"shortname": "axis",
-	"description": "axis PTZ camera control",
-	"main": "index.js",
-	"author": "Frans Bosman <frans@fbosman.nl>",
+	"main": "src/index.js",
+	"type": "module",
+	"scripts": {
+		"lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist --ignore-pattern pkg",
+		"lint": "yarn lint:raw ."
+	 },
 	"license": "MIT",
-	"dependencies": {
-		"request": "^2.85.0"
-	},
-	"homepage": "https://github.com/bitfocus/companion-module-axis-ptz#readme",
-	"bugs": {
-		"url": "https://github.com/bitfocus/companion-module-axis-ptz/issues"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/bitfocus/companion-module-axis-ptz.git"
+	},
+	"dependencies": {
+		"@companion-module/base": "~1.0.0",
+		"got": "^12.5.3",
+		
+		"urllib":"^3.10.0"
+	},
+	"devDependencies": {
+		"@companion-module/tools": "^0.5.1"
 	}
 }
