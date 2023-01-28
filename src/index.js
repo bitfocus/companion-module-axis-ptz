@@ -27,13 +27,10 @@ class axisPTZInstance extends InstanceBase {
       .then((result) => {
         // store header information
         var resObj = result.data;
-        if (!String(resObj).includes('"status": 200')) {
-          this.updateStatus(InstanceStatus.ConnectionFailure);
-          this.log("debug", "Connection Failure: " + resObj);
-        } else {
+        
           this.updateStatus(InstanceStatus.Ok);
           this.processCameraInformation(resObj);
-        }
+      
       })
       .catch((err) => {
         this.log("debug", "Axis Error: " + util.inspect(err));
