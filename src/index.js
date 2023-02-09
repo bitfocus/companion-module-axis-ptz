@@ -206,9 +206,9 @@ class axisPTZInstance extends InstanceBase {
     this.config = config;
     this.updateStatus(InstanceStatus.Connecting);
     if (Number(this.config.authmethod) == 1) {
-      this.config.authtext = { digestAuth: `root:werken` };
+      this.config.authtext = { digestAuth: `${this.config.user}:${this.config.password}` };
     } else {
-      this.config.authtext = { auth: `root:werken` };
+      this.config.authtext = { auth: `${this.config.user}:${this.config.password}` };
     }
 
     //	this.init_tcp()
