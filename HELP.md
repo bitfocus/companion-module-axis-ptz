@@ -8,7 +8,7 @@ See https://axis.com
 Only basic PTZ-commands of this API are implemented.
 
 ### Configuration
-Set IP address, port, and password. Password is necessary.
+Set IP address, port, and password and authentication method.
 
 ### Supported commands
 PTZ
