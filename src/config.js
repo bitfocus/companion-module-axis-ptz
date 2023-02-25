@@ -60,4 +60,25 @@ export const ConfigFields = [
 
     // regex: Regex.IP
   },
+  {
+    type: "textinput",
+    id: "timeout",
+    label: "timeout",
+    tooltip: "In case of a high latency network you can set the timeout to another value",
+    value: "5000",
+    width: 10,
+  },
+  {
+    type: "dropdown",
+    id: "debug",
+    default: "0",
+    label: "extended debug",
+    width: 10,
+
+    choices: [
+      { id: 0, label: "off" },
+      { id: 1, label: "on" },
+    ],
+
+  },
 ];
