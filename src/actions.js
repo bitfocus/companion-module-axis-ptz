@@ -71,13 +71,23 @@ async function sendPTZ(self, action, direction) {
     // self.log("debug", `Sending PTZ : ${url}`);
     //}
     const urllib = new HttpClient();
-    try {
-      await urllib.request(url, self.config.authtext);
-      self.getCameraPosition();
-      self.checkFeedbacks();
-    } catch (err) {
+    
+      console.log("debug", `Action send: ${url} `+util.inspect (self.config.authtext));
+
+     
+      urllib
+      .request(url, self.urlliboptions
+      )
+      .then((result) => {
+        console.log("debug", `Action result: `+ util.inspect (result));
+     
+        self.getCameraPosition();
+        self.checkFeedbacks();
+      
+    })
+    .catch ((err) => {
       console.log("debug", `Action failed: ${url} + ${err}`);
-    }
+    })
   }
 }
 
