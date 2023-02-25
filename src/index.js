@@ -10,7 +10,7 @@ import { getPresetDefinitions } from "./presets.js";
 import { setVariables, checkVariables } from "./variables.js";
 import { ConfigFields } from "./config.js";
 
-import util from "util";
+import util from "util"; 
 import { HttpClient } from "urllib";
 
 // ########################
@@ -19,18 +19,25 @@ import { HttpClient } from "urllib";
 class axisPTZInstance extends InstanceBase {
   getCameraInformation() {
     const urllib = new HttpClient();
+    const url = "http://"+ this.config.host +":"+this.config.httpPort+ "/axis-cgi/param.cgi?action=list"
+    this.log("debug", "Connection url: "+url)
+    const options = { 'timeout' : `5000` };
     urllib
-      .request(
-        this.config.host + "/axis-cgi/param.cgi?action=list",
-        this.config.authtext
+      .request(url, this.urlliboptions
       )
       .then((result) => {
+        this.log("debug", "Connection result: " + util.inspect(result));
         // store header information
         var resObj = result.data;
-        
+        this.log("debug", "Connection result: " + resObj);
+       // if (!String(result).includes('status: 200')) 
+        //{
+        //  this.updateStatus(InstanceStatus.ConnectionFailure);
+       //   this.log("debug", "Connection Failure: " + resObj);
+       // } else {
           this.updateStatus(InstanceStatus.Ok);
           this.processCameraInformation(resObj);
-      
+       // }
       })
       .catch((err) => {
         this.log("debug", "Axis Error: " + util.inspect(err));
@@ -92,10 +99,11 @@ class axisPTZInstance extends InstanceBase {
 
   getCameraPosition() {
     const urllib = new HttpClient();
+    const url = "http://"+ this.config.host +":"+this.config.httpPort+ "/axis-cgi/com/ptz.cgi?query=position"
     urllib
       .request(
-        this.config.host + "/axis-cgi/com/ptz.cgi?query=position",
-        this.config.authtext
+       url,
+       this.urlliboptions
       )
       .then((result) => {
         var resObj = result.data;
@@ -152,12 +160,27 @@ class axisPTZInstance extends InstanceBase {
   // Initalize module
   async init(config) {
     this.config = config;
+    this.urlliboptions = {}
 
     if (Number(this.config.authmethod) == 1) {
-      this.config.authtext = { digestAuth: `root:werken` };
-    } else {
-      this.config.authtext = { auth: `root:werken` };
-    }
+      this.urlliboptions = {
+        method: "GET",
+        rejectUnauthorized: false,
+        digestAuth: `${this.config.user}:${this.config.password}`,
+        timeout: 5000,
+      }
+      } else {
+
+        this.urlliboptions = {
+          method: "GET",
+          rejectUnauthorized: false,
+          auth: `${this.config.user}:${this.config.password}`,
+          timeout: 5000,
+        };
+      }
+
+    
+  
 
     this.data = {
       debug: false,
