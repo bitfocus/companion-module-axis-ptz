@@ -321,8 +321,8 @@ seriesActions.ptSpeed = false;
   // ######################
   // #### Lens Actions ####
   // ######################
-
-  if (seriesActions.zoom) {
+ 
+ // if (seriesActions.zoom) {
     actions.zoomI = {
       name: "Lens - Zoom In",
       options: [zoomdefinition],
@@ -338,9 +338,9 @@ seriesActions.ptSpeed = false;
         await sendPTZ(self, cmd, param);
       },
     };
-  }
+  //}
 
-  if (seriesActions.zoom) {
+  //if (seriesActions.zoom) {
     actions.zoomO = {
       name: "Lens - Zoom Out",
       options: [zoomdefinition],
@@ -354,9 +354,9 @@ seriesActions.ptSpeed = false;
         await sendPTZ(self, cmd, param);
       },
     };
-  }
+  //}
 
-  if (seriesActions.zoom) {
+  //if (seriesActions.zoom) {
     actions.zoomS = {
       name: "Lens - Zoom Stop",
       options: [],
@@ -368,7 +368,7 @@ seriesActions.ptSpeed = false;
         self.checkFeedbacks();
       },
     };
-  }
+  //}
 
   if (seriesActions.zSpeed) {
     actions.zSpeedS = {
