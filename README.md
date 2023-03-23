@@ -79,3 +79,6 @@ For more information on the axis API, please refer to:
 **V2.0 **
 Refactored for version 3
 added digest auth
+
+**v2.04 **
+corrected zoom-actions
