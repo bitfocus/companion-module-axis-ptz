@@ -82,3 +82,6 @@ added digest auth
 
 **v2.04 **
 corrected zoom-actions
+
+**v2.05 **
+corrected ptz-Home command
