@@ -244,15 +244,16 @@ export function getActionDefinitions(self) {
   
 
  
-    actions.home = {
+   actions.home = {
       name: "Pan/Tilt - Home",
-      options: [],
-      ccallback: async (action) => {
+      options: [speeddefinition],
+      callback: async (action) => {
         //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
-
-        cmd = "continuouspantiltmove";
-        param = "0,0";
-
+  
+        cmd = "move";
+        param = "home";
+    
+  
         await sendPTZ(self, cmd, param);
       },
     };
