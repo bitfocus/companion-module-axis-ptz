@@ -90,7 +90,7 @@ async function sendPTZ(self, action, direction) {
       .request(url, self.urlliboptions
       )
       .then((result) => {
-        console.log("debug", `Action result: `+ util.inspect (result));
+      //  console.log("debug", `Action result: `+ util.inspect (result));
      
         self.getCameraPosition();
         self.checkFeedbacks();
@@ -475,8 +475,8 @@ seriesActions.ptSpeed = true;
  // }
 
  // if (seriesActions.focus) {
-    actions.focusF = {
-      name: "Lens - Focus Far",
+    actions.focusS = {
+      name: "Lens - Focus Stop`",
       options: [],
       callback: async (action) => {
         cmd = "continuousfocusmove";
@@ -486,15 +486,6 @@ seriesActions.ptSpeed = true;
     };
  // }
 
-  //if (seriesActions.focus) {
-    actions.focusS = {
-      name: "Lens - Focus Stop",
-      options: [],
-      callback: async (action) => {
-        await sendPTZ(self, "F50");
-      },
-    };
- //}
 
   if (seriesActions.fSpeed) {
     actions.fSpeedS = {
