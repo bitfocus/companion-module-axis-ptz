@@ -627,8 +627,11 @@ export function getPresetDefinitions(self) {
         {
           down: [
             {
-              actionId: "focusN",
-              options: {},
+              actionId: "focusI",
+              options: {
+                speed: 50,
+
+              },
             },
           ],
           up: [
@@ -656,8 +659,8 @@ export function getPresetDefinitions(self) {
         {
           down: [
             {
-              actionId: "focusF",
-              options: {},
+              actionId: "focusO",
+              options: {speed:50,},
             },
           ],
           up: [

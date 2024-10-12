@@ -31,6 +31,17 @@ const zoomdefinition = {
   required: true,
   range: false,
 };
+const focusdefinition = {
+  type: "number",
+  label: "FocusSpeed",
+  id: "focusspeed",
+  min: -100,
+  max: 100,
+  default: 50,
+  step: 1,
+  required: true,
+  range: false,
+};
 
 var cmd = "";
 var param = "";
@@ -55,10 +66,10 @@ for (let i = 1; i < 100; ++i) {
 // ######################
 
 async function sendPTZ(self, action, direction) {
-  //self.log("debug", "Sending PTZ " + action + ":" + direction);
+  self.log("debug", "Sending PTZ " + action + ":" + direction);
   if (action) {
     const url =
-      "http://" +
+     
       self.config.host +
       ":" +
       self.config.httpPort +
@@ -244,7 +255,7 @@ export function getActionDefinitions(self) {
   
 
  
-   actions.home = {
+    actions.home = {
       name: "Pan/Tilt - Home",
       options: [speeddefinition],
       callback: async (action) => {
@@ -259,7 +270,7 @@ export function getActionDefinitions(self) {
     };
   
 const seriesActions = {}
-seriesActions.ptSpeed = false;
+seriesActions.ptSpeed = true;
 
   if (seriesActions.ptSpeed) {
     actions.ptSpeedS = {
@@ -267,7 +278,7 @@ seriesActions.ptSpeed = false;
       options: [
         {
           type: "dropdown",
-          label: "speed setting",
+          label: "speed adjustement PT",
           id: "speed",
           default: 25,
           choices: c.CHOICES_SPEED,
@@ -429,7 +440,7 @@ seriesActions.ptSpeed = false;
     };
   }
 
-  if (seriesActions.focus) {
+ //if (seriesActions.focus) {
     actions.focusI = {
       name: "Lens - focus In",
       options: [speeddefinition],
@@ -445,9 +456,9 @@ seriesActions.ptSpeed = false;
         await sendPTZ(self, cmd, param);
       },
     };
-  }
+  //}
 
-  if (seriesActions.focus) {
+  //if (seriesActions.focus) {
     actions.focusO = {
       name: "Lens - focus Out",
       options: [speeddefinition],
@@ -461,19 +472,21 @@ seriesActions.ptSpeed = false;
         await sendPTZ(self, cmd, param);
       },
     };
-  }
+ // }
 
-  if (seriesActions.focus) {
+ // if (seriesActions.focus) {
     actions.focusF = {
       name: "Lens - Focus Far",
       options: [],
       callback: async (action) => {
-        await sendPTZ(self, "F" + parseInt(50 + self.fSpeed));
+        cmd = "continuousfocusmove";
+        param = "0";
+        await sendPTZ(self, cmd, param);
       },
     };
-  }
+ // }
 
-  if (seriesActions.focus) {
+  //if (seriesActions.focus) {
     actions.focusS = {
       name: "Lens - Focus Stop",
       options: [],
@@ -481,7 +494,7 @@ seriesActions.ptSpeed = false;
         await sendPTZ(self, "F50");
       },
     };
-  }
+ //}
 
   if (seriesActions.fSpeed) {
     actions.fSpeedS = {
