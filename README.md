@@ -2,11 +2,9 @@
 
 See HELP.md and LICENSE
 
-Current support is based on "HD/4K Integrated Camera Interface Specifications" version 1.12 from Apr. 27, 2020.
-For more information on the axis API, please refer to:
-[axis Interface Specifications, Protocol](https://eww.pass.axis.co.jp/pro-av/support/content/guide/EN/top.html)
 
-**V1.0.7**
+For more information on the axis API, please refer to:
+https://www.axis.com/vapix-library/
 
 - Added Hanging and Desktop mode
 - Added One Touch Auto Focus
