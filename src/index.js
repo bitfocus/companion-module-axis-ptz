@@ -62,6 +62,11 @@ class axisPTZInstance extends InstanceBase {
         switch (String(chunks[i].split("=")[0])) {
           case "root.Brand.ProdShortName":
             attarr["CameraType"] = val;
+            this.CameraType = val;
+            break;
+          case "root.Properties.Firmware.Version":
+            attarr["FirmwareVersion"] = val;
+            this.FirmwareVersion = val;
             break;
           case "root.PTZ.Limit.L1.MaxFocus":
             attarr["MaxFocus"] = Number(val);
@@ -161,6 +166,8 @@ class axisPTZInstance extends InstanceBase {
   async init(config) {
     this.config = config;
     this.urlliboptions = {}
+    this.CameraType = "Axis"
+    this.FirmwareVersion = ""
 
     if (Number(this.config.authmethod) == 1) {
       this.urlliboptions = {
