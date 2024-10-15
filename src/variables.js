@@ -13,6 +13,7 @@ export function setVariables() {
   // console.log(self.data.modelTCP);
   // console.log(self.data.series);
   variables.push({ variableId: "CameraType", name: "Camera Type" });
+  variables.push({ variableId: "FirmwareVersion", name: "Firmware Version" });
   variables.push({ variableId: "autofocus", name: "AutoFocus" });
   variables.push({ variableId: "MaxPan", name: "MaxPan" });
   variables.push({ variableId: "MinPan", name: "MinPan" });
@@ -42,6 +43,7 @@ export function checkVariables(self) {
   self.setVariableValues({
     series: self.data.series,
     model: self.data.model,
+    FirmwareVersion: self.data.FirmwareVersion,
     name: self.data.name,
     version: self.data.version,
     error: self.data.error,
