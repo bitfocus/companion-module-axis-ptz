@@ -757,7 +757,7 @@ export function getPresetDefinitions(self) {
   // ###########################
   seriesActions.preset = true;
   if (seriesActions.preset) {
-    for (let save = 0; save < 100; save++) {
+    for (let save = 1; save < 100; save++) {
       presets[`save-preset-${save}`] = {
         type: "button",
         category: "Save Preset",
@@ -840,7 +840,7 @@ export function getPresetDefinitions(self) {
     };
   }
 
-  for (let recall = 0; recall < 100; recall++) {
+  for (let recall = 1; recall < 100; recall++) {
     presets[`recall-preset-${recall}`] = {
       type: "button",
       category: "Recall Preset",

@@ -45,6 +45,7 @@ const focusdefinition = {
 
 var cmd = "";
 var param = "";
+var fw = [];
 const CHOICES_IRIS = [];
 for (let i = 0; i < 100; ++i) {
   CHOICES_IRIS.push({
@@ -83,7 +84,43 @@ async function sendPTZ(self, action, direction) {
     //}
     const urllib = new HttpClient();
     
-      console.log("debug", `Action send: ${url} `+util.inspect (self.config.authtext));
+      console.log("debug", `Action send: ${url} `);
+
+     
+      urllib
+      .request(url, self.urlliboptions
+      )
+      .then((result) => {
+      //  console.log("debug", `Action result: `+ util.inspect (result));
+     
+        self.getCameraPosition();
+        self.checkFeedbacks();
+      
+    })
+    .catch ((err) => {
+      console.log("debug", `Action failed: ${url} + ${err}`);
+    })
+  }
+}
+async function sendPTZConfig(self, action, direction) {
+  self.log("debug", "Sending PTZConfig " + action + ":" + direction);
+  if (action) {
+    const url =
+     
+      self.config.host +
+      ":" +
+      self.config.httpPort +
+      "/axis-cgi/com/ptzconfig.cgi?" +
+      action +
+      "=" +
+      direction +
+      "&camera=1";
+    //if (self.config.debug) {
+    // self.log("debug", `Sending PTZ : ${url}`);
+    //}
+    const urllib = new HttpClient();
+    
+      console.log("debug", `Action send: ${url} `);
 
      
       urllib
@@ -597,11 +634,18 @@ seriesActions.ptSpeed = true;
         cmd = "setserverpresetno";
         param = action.options.val;
         //self.ptzMove(param, cmd, opt.speed)
-
-        await sendPTZ(self, cmd, param);
+        fw = self.FirmwareVersion.split(".")
+        self.log("debug", "fw: " + fw + " > 10: "+ (parseInt(fw[0]) > 10));
+        if (parseInt(fw[0]) > 10){
+          self.log("debug", "firmware > 10");
+          await sendPTZConfig(self, cmd, param);
+        } else {
+          self.log("debug", "firmware <= 10");
+          await sendPTZ(self, cmd, param);
+        }
         self.getCameraPosition();
         self.checkFeedbacks();
-        await sendPTZ(self, "M" + action.options.val);
+       
       },
     };
   }
