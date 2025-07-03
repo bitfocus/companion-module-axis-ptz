@@ -70,7 +70,7 @@ async function sendPTZ(self, action, direction) {
   self.log("debug", "Sending PTZ " + action + ":" + direction);
   if (action) {
     const url =
-     
+
       self.config.host +
       ":" +
       self.config.httpPort +
@@ -83,30 +83,30 @@ async function sendPTZ(self, action, direction) {
     // self.log("debug", `Sending PTZ : ${url}`);
     //}
     const urllib = new HttpClient();
-    
-      console.log("debug", `Action send: ${url} `);
 
-     
-      urllib
+    console.log("debug", `Action send: ${url} `);
+
+
+    urllib
       .request(url, self.urlliboptions
       )
       .then((result) => {
-      //  console.log("debug", `Action result: `+ util.inspect (result));
-     
+        //  console.log("debug", `Action result: `+ util.inspect (result));
+
         self.getCameraPosition();
         self.checkFeedbacks();
-      
-    })
-    .catch ((err) => {
-      console.log("debug", `Action failed: ${url} + ${err}`);
-    })
+
+      })
+      .catch((err) => {
+        console.log("debug", `Action failed: ${url} + ${err}`);
+      })
   }
 }
 async function sendPTZConfig(self, action, direction) {
   self.log("debug", "Sending PTZConfig " + action + ":" + direction);
   if (action) {
     const url =
-     
+
       self.config.host +
       ":" +
       self.config.httpPort +
@@ -119,23 +119,50 @@ async function sendPTZConfig(self, action, direction) {
     // self.log("debug", `Sending PTZ : ${url}`);
     //}
     const urllib = new HttpClient();
-    
-      console.log("debug", `Action send: ${url} `);
 
-     
-      urllib
+    console.log("debug", `Action send: ${url} `);
+
+
+    urllib
       .request(url, self.urlliboptions
       )
       .then((result) => {
-      //  console.log("debug", `Action result: `+ util.inspect (result));
-     
+        //  console.log("debug", `Action result: `+ util.inspect (result));
+
         self.getCameraPosition();
         self.checkFeedbacks();
-      
-    })
-    .catch ((err) => {
-      console.log("debug", `Action failed: ${url} + ${err}`);
-    })
+
+      })
+      .catch((err) => {
+        console.log("debug", `Action failed: ${url} + ${err}`);
+      })
+  }
+}
+
+//Send Parameters
+async function sendParam(self, param) {
+  self.log("debug", "Sending Param: " + param);
+  if (param) {
+    const url =
+      self.config.host +
+      ":" +
+      self.config.httpPort +
+      "/axis-cgi/param.cgi?" +
+      param;
+
+    const urllib = new HttpClient();
+
+    console.log("debug", `Param send: ${url}`);
+
+    urllib
+      .request(url, self.urlliboptions)
+      .then((result) => {
+        self.getCameraPosition();
+        self.checkFeedbacks();
+      })
+      .catch((err) => {
+        console.log("debug", `Param failed: ${url} + ${err}`);
+      });
   }
 }
 
@@ -149,39 +176,39 @@ export function getActionDefinitions(self) {
   // #### Pan/Tilt Actions ####
   // ##########################
 
- 
-    actions.left = {
-      name: "Pan/Tilt - Pan Left",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuouspantiltmove";
-        param = "-" + action.options.speed + ",0";
-        //self.ptzMove(param, cmd, opt.speed)
+  actions.left = {
+    name: "Pan/Tilt - Pan Left",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
-  
+      cmd = "continuouspantiltmove";
+      param = "-" + action.options.speed + ",0";
+      //self.ptzMove(param, cmd, opt.speed)
 
- 
-    actions.right = {
-      name: "Pan/Tilt - Pan Right",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+      await sendPTZ(self, cmd, param);
+    },
+  };
 
-        cmd = "continuouspantiltmove";
-        param = action.options.speed + ",0";
-        //self.ptzMove(param, cmd, opt.speed)
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
-  
 
- 
+  actions.right = {
+    name: "Pan/Tilt - Pan Right",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+
+      cmd = "continuouspantiltmove";
+      param = action.options.speed + ",0";
+      //self.ptzMove(param, cmd, opt.speed)
+
+      await sendPTZ(self, cmd, param);
+    },
+  };
+
+
+
   actions.up = {
     name: "Pan/Tilt - Tilt Up",
     options: [speeddefinition],
@@ -196,118 +223,118 @@ export function getActionDefinitions(self) {
     },
   };
 
-    actions.down = {
-      name: "Pan/Tilt - Tilt Down",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+  actions.down = {
+    name: "Pan/Tilt - Tilt Down",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuouspantiltmove";
-        param = "0," + "-" + action.options.speed;
-        //self.ptzMove(param, cmd, opt.speed)
+      cmd = "continuouspantiltmove";
+      param = "0," + "-" + action.options.speed;
+      //self.ptzMove(param, cmd, opt.speed)
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
-  
-
- 
-    actions.upLeft = {
-      name: "Pan/Tilt - Up Left",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
-
-        cmd = "continuouspantiltmove";
-        param = "-" + action.options.speed + "," + action.options.speed;
-        //self.ptzMove(param, cmd, opt.speed)
-
-        await sendPTZ(self, cmd, param);
-      },
-    };
-  
+      await sendPTZ(self, cmd, param);
+    },
+  };
 
 
-    actions.upRight = {
-      name: "Pan/Tilt - Up Right",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuouspantiltmove";
-        param = action.options.speed + "," + action.options.speed;
-        //self.ptzMove(param, cmd, opt.speed)
+  actions.upLeft = {
+    name: "Pan/Tilt - Up Left",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
+      cmd = "continuouspantiltmove";
+      param = "-" + action.options.speed + "," + action.options.speed;
+      //self.ptzMove(param, cmd, opt.speed)
 
-
-    actions.downLeft = {
-      name: "Pan/Tilt - Down Left",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
-
-        cmd = "continuouspantiltmove";
-        param = "-" + action.options.speed + "," + "-" + action.options.speed;
-        //self.ptzMove(param, cmd, opt.speed)
-
-        await sendPTZ(self, cmd, param);
-      },
-    };
-  
+      await sendPTZ(self, cmd, param);
+    },
+  };
 
 
-    actions.downRight = {
-      name: "Pan/Tilt - Down Right",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuouspantiltmove";
-        param = action.options.speed + "," + "-" + action.options.speed;
-        //self.ptzMove(param, cmd, opt.speed)
+  actions.upRight = {
+    name: "Pan/Tilt - Up Right",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
-  
+      cmd = "continuouspantiltmove";
+      param = action.options.speed + "," + action.options.speed;
+      //self.ptzMove(param, cmd, opt.speed)
+
+      await sendPTZ(self, cmd, param);
+    },
+  };
 
 
-    actions.stop = {
-      name: "Pan/Tilt - Stop",
-      options: [],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+  actions.downLeft = {
+    name: "Pan/Tilt - Down Left",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuouspantiltmove";
-        param = "0,0";
+      cmd = "continuouspantiltmove";
+      param = "-" + action.options.speed + "," + "-" + action.options.speed;
+      //self.ptzMove(param, cmd, opt.speed)
 
-        await sendPTZ(self, cmd, param);
-        self.getCameraPosition();
-        self.checkFeedbacks();
-      },
-    };
-  
+      await sendPTZ(self, cmd, param);
+    },
+  };
 
- 
-    actions.home = {
-      name: "Pan/Tilt - Home",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
-  
-        cmd = "move";
-        param = "home";
-    
-  
-        await sendPTZ(self, cmd, param);
-      },
-    };
-  
-const seriesActions = {}
-seriesActions.ptSpeed = true;
+
+
+  actions.downRight = {
+    name: "Pan/Tilt - Down Right",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+
+      cmd = "continuouspantiltmove";
+      param = action.options.speed + "," + "-" + action.options.speed;
+      //self.ptzMove(param, cmd, opt.speed)
+
+      await sendPTZ(self, cmd, param);
+    },
+  };
+
+
+
+  actions.stop = {
+    name: "Pan/Tilt - Stop",
+    options: [],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+
+      cmd = "continuouspantiltmove";
+      param = "0,0";
+
+      await sendPTZ(self, cmd, param);
+      self.getCameraPosition();
+      self.checkFeedbacks();
+    },
+  };
+
+
+
+  actions.home = {
+    name: "Pan/Tilt - Home",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+
+      cmd = "move";
+      param = "home";
+
+
+      await sendPTZ(self, cmd, param);
+    },
+  };
+
+  const seriesActions = {}
+  seriesActions.ptSpeed = true;
 
   if (seriesActions.ptSpeed) {
     actions.ptSpeedS = {
@@ -370,53 +397,53 @@ seriesActions.ptSpeed = true;
   // ######################
   // #### Lens Actions ####
   // ######################
- 
- // if (seriesActions.zoom) {
-    actions.zoomI = {
-      name: "Lens - Zoom In",
-      options: [zoomdefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuouszoommove";
+  // if (seriesActions.zoom) {
+  actions.zoomI = {
+    name: "Lens - Zoom In",
+    options: [zoomdefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        param = action.options.zoomspeed;
-        //self.ptzMove(param, cmd, opt.speed)
-        self.log("debug", "zoomspeed: " + param);
+      cmd = "continuouszoommove";
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
+      param = action.options.zoomspeed;
+      //self.ptzMove(param, cmd, opt.speed)
+      self.log("debug", "zoomspeed: " + param);
+
+      await sendPTZ(self, cmd, param);
+    },
+  };
   //}
 
   //if (seriesActions.zoom) {
-    actions.zoomO = {
-      name: "Lens - Zoom Out",
-      options: [zoomdefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+  actions.zoomO = {
+    name: "Lens - Zoom Out",
+    options: [zoomdefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuouszoommove";
-        param = "-" + action.options.zoomspeed;
-        //self.ptzMove(param, cmd, opt.speed)
+      cmd = "continuouszoommove";
+      param = "-" + action.options.zoomspeed;
+      //self.ptzMove(param, cmd, opt.speed)
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
+      await sendPTZ(self, cmd, param);
+    },
+  };
   //}
 
   //if (seriesActions.zoom) {
-    actions.zoomS = {
-      name: "Lens - Zoom Stop",
-      options: [],
-      callback: async (action) => {
-        cmd = "continuouszoommove";
-        param = 0;
-        await sendPTZ(self, cmd, param);
-        self.getCameraPosition();
-        self.checkFeedbacks();
-      },
-    };
+  actions.zoomS = {
+    name: "Lens - Zoom Stop",
+    options: [],
+    callback: async (action) => {
+      cmd = "continuouszoommove";
+      param = 0;
+      await sendPTZ(self, cmd, param);
+      self.getCameraPosition();
+      self.checkFeedbacks();
+    },
+  };
   //}
 
   if (seriesActions.zSpeed) {
@@ -477,51 +504,51 @@ seriesActions.ptSpeed = true;
     };
   }
 
- //if (seriesActions.focus) {
-    actions.focusI = {
-      name: "Lens - focus In",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+  //if (seriesActions.focus) {
+  actions.focusI = {
+    name: "Lens - focus In",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuousfocusmove";
+      cmd = "continuousfocusmove";
 
-        param = action.options.speed;
-        //self.ptzMove(param, cmd, opt.speed)
-        self.log("debug", "speed: " + param);
+      param = action.options.speed;
+      //self.ptzMove(param, cmd, opt.speed)
+      self.log("debug", "speed: " + param);
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
+      await sendPTZ(self, cmd, param);
+    },
+  };
   //}
 
   //if (seriesActions.focus) {
-    actions.focusO = {
-      name: "Lens - focus Out",
-      options: [speeddefinition],
-      callback: async (action) => {
-        //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
+  actions.focusO = {
+    name: "Lens - focus Out",
+    options: [speeddefinition],
+    callback: async (action) => {
+      //console.log(util.inspect(action.options, {showHidden: false, depth: null, colors: true}))
 
-        cmd = "continuousfocusmove";
-        param = "-" + action.options.speed;
-        //self.ptzMove(param, cmd, opt.speed)
+      cmd = "continuousfocusmove";
+      param = "-" + action.options.speed;
+      //self.ptzMove(param, cmd, opt.speed)
 
-        await sendPTZ(self, cmd, param);
-      },
-    };
- // }
+      await sendPTZ(self, cmd, param);
+    },
+  };
+  // }
 
- // if (seriesActions.focus) {
-    actions.focusS = {
-      name: "Lens - Focus Stop`",
-      options: [],
-      callback: async (action) => {
-        cmd = "continuousfocusmove";
-        param = "0";
-        await sendPTZ(self, cmd, param);
-      },
-    };
- // }
+  // if (seriesActions.focus) {
+  actions.focusS = {
+    name: "Lens - Focus Stop`",
+    options: [],
+    callback: async (action) => {
+      cmd = "continuousfocusmove";
+      param = "0";
+      await sendPTZ(self, cmd, param);
+    },
+  };
+  // }
 
 
   if (seriesActions.fSpeed) {
@@ -635,8 +662,8 @@ seriesActions.ptSpeed = true;
         param = action.options.val;
         //self.ptzMove(param, cmd, opt.speed)
         fw = self.FirmwareVersion.split(".")
-        self.log("debug", "fw: " + fw + " > 10: "+ (parseInt(fw[0]) > 10));
-        if (parseInt(fw[0]) > 10){
+        self.log("debug", "fw: " + fw + " > 10: " + (parseInt(fw[0]) > 10));
+        if (parseInt(fw[0]) > 10) {
           self.log("debug", "firmware > 10");
           await sendPTZConfig(self, cmd, param);
         } else {
@@ -645,7 +672,7 @@ seriesActions.ptSpeed = true;
         }
         self.getCameraPosition();
         self.checkFeedbacks();
-       
+
       },
     };
   }
@@ -669,6 +696,67 @@ seriesActions.ptSpeed = true;
         await sendPTZ(self, cmd, param);
         self.getCameraPosition();
         self.checkFeedbacks();
+      },
+    };
+  }
+
+  // #########################
+  // #### Guard Tour Actions ####
+  // #########################
+  seriesActions.guardTour = true;
+
+  if (seriesActions.guardTour) {
+    actions.guardTourStart = {
+      name: "Guard Tour - Start",
+      options: [
+        {
+          type: "number",
+          label: "Guard Tour Number",
+          id: "tourNumber",
+          min: 0,
+          max: 99,
+          default: 0,
+          step: 1,
+          required: true,
+          range: false,
+        },
+      ],
+      callback: async (action) => {
+        const param = `action=update&GuardTour.G${action.options.tourNumber}.Running=yes`;
+        await sendParam(self, param);
+      },
+    };
+
+    actions.guardTourStop = {
+      name: "Guard Tour - Stop",
+      options: [
+        {
+          type: "number",
+          label: "Guard Tour Number",
+          id: "tourNumber",
+          min: 0,
+          max: 99,
+          default: 0,
+          step: 1,
+          required: true,
+          range: false,
+        },
+      ],
+      callback: async (action) => {
+        const param = `action=update&GuardTour.G${action.options.tourNumber}.Running=no`;
+        await sendParam(self, param);
+      },
+    };
+
+    actions.guardTourStopAll = {
+      name: "Guard Tour - Stop All",
+      options: [],
+      callback: async (action) => {
+        // Stop all guard tours (0-3)
+        for (let i = 0; i < 4; i++) {
+          const param = `action=update&GuardTour.G${i}.Running=no`;
+          await sendParam(self, param);
+        }
       },
     };
   }
