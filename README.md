@@ -17,3 +17,6 @@ corrected zoom-actions
 
 **v2.05 **
 corrected ptz-Home command
+
+**2.20
+Added Guard Tour
