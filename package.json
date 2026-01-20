@@ -19,6 +19,6 @@
 		"urllib":"^3.10.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^0.5.1"
+		"@companion-module/tools": "^2.4.2"
 	}
 }
