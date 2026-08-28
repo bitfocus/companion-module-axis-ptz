@@ -13,7 +13,7 @@
 		"url": "git+https://github.com/bitfocus/companion-module-axis-ptz.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.0.0",
+		"@companion-module/base": "~1.4.3",
 		"got": "^12.5.3",
 		"urllib": "^3.10.0"
 	},
