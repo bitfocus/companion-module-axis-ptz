@@ -5,20 +5,25 @@
 	"type": "module",
 	"scripts": {
 		"lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist --ignore-pattern pkg",
-		"lint": "yarn lint:raw ."
-	 },
+		"lint": "yarn lint:raw .",
+		"build": "companion-module-build",
+		"test": "node --test test/*.test.js"
+	},
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/bitfocus/companion-module-axis-ptz.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.0.0",
+		"@companion-module/base": "~1.15.0",
 		"got": "^12.5.3",
-		
-		"urllib":"^3.10.0"
+		"urllib": "^4.9.1"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^0.5.1"
+		"@companion-module/tools": "^2.9.0",
+		"eslint": "^8.57.1"
+	},
+	"engines": {
+		"node": "^26.5"
 	}
 }
