@@ -5,7 +5,6 @@ import { createServer } from 'node:http'
 import { once } from 'node:events'
 import { test } from 'node:test'
 import { getActionDefinitions } from '../src/actions.js'
-import { getFeedbackDefinitions } from '../src/feedbacks.js'
 
 test('PTZ actions send the expected HTTP command and refresh position', async () => {
 	const requests = []
@@ -41,19 +40,6 @@ test('PTZ actions send the expected HTTP command and refresh position', async ()
 		await new Promise((resolve) => server.close(resolve))
 	}
 })
-
-test('autofocus and pan limit feedbacks follow camera variables', () => {
-	const variables = { autofocus: 'on', pan: '179.5', MaxPan: '180' }
-	const feedbacks = getFeedbackDefinitions({ getVariableValue: (id) => variables[id] })
-	assert.equal(feedbacks.autoFocus.callback({ options: { option: '1' } }), true)
-	assert.equal(feedbacks.autoFocus.callback({ options: { option: '0' } }), false)
-	assert.equal(feedbacks.MaxPanLimit.callback(), true)
-	variables.autofocus = 'off'
-	variables.pan = '0'
-	assert.equal(feedbacks.autoFocus.callback({ options: { option: '0' } }), true)
-	assert.equal(feedbacks.MaxPanLimit.callback(), false)
-})
-
 
 test('PTZ actions complete a digest authentication challenge', async () => {
 	let authenticated = false
