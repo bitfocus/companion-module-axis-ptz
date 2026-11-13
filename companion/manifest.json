@@ -13,7 +13,7 @@
 			"email": "mc-hauge@hotmail.com"
 		},
 		{
-			"name": "Per Røine",
+			"name": "Per R\u00f8ine",
 			"email": "per.roine@gmail.com"
 		},
 		{
@@ -23,7 +23,7 @@
 	],
 	"legacyIds": [],
 	"runtime": {
-		"type": "node18",
+		"type": "node26",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
 		"entrypoint": "../src/index.js"
