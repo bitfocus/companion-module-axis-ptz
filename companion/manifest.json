@@ -28,7 +28,7 @@
 		"apiVersion": "0.0.0",
 		"entrypoint": "../src/index.js"
 	},
-	"manufacturer": "axis",
+	"manufacturer": "Axis Communications",
 	"products": ["PTZ Camera"],
 	"keywords": ["ptz", "Camera"]
 }
